@@ -230,6 +230,105 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/27/iOS事件响应/" itemprop="url">
+                  iOS事件响应
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-03-27T14:09:28+08:00" content="2017-03-27">
+              2017-03-27
+            </time>
+          </span>
+
+          
+
+          <!-- 
+            
+           -->
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。</p>
+<h4 id="iOS操作系统关于事件的处理"><a href="#iOS操作系统关于事件的处理" class="headerlink" title="iOS操作系统关于事件的处理"></a>iOS操作系统关于事件的处理</h4><p>当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考<a href="http://iphonedevwiki.net/index.php/IOHIDFamily">IOHIDFamily</a></p>
+<h4 id="App内对事件的相关处理"><a href="#App内对事件的相关处理" class="headerlink" title="App内对事件的相关处理"></a>App内对事件的相关处理</h4><p> 程序启动后会创建一个com.apple.uikit.eventfetch-thread线程。并在该线程添加Runloop，并添加mach_port来获取SpringBoard分发过来的事件信息，在该线程中有一个UIEventFetcher私有对象，<a href="https://github.com/VLemon/iOS10-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIEventFetcher.h">获取的UIEventFetcher.h</a>，将SpringBoard分发过来的事件信息进行封装并转发给主线程。</p>
+<p>在查看堆栈信息的时候发现主线程在响应事件的时候触发的的Source1事件，说明也是通过mach_port来监听的事件，当主线程获取到Event后就会去寻找当前该处理这个事件的响应者。具体的逻辑如下</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/27/iOS事件响应/" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/16/Runloop/" itemprop="url">
                   Runloop
                 </a>
@@ -453,7 +552,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

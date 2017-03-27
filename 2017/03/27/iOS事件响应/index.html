@@ -42,7 +42,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="GIF 原创," />
+  <meta name="keywords" content="vLemon, iOS" />
 
 
 
@@ -60,19 +60,21 @@
 
 
 
-<meta name="description" content="iOS通过原生的方式支持GIF普通初始化UIImage的方法是不能支持GIF图显示的，但是可以通过解析GIF的data获取到每一帧的UIImage对象然后通过UIImage.animatedImage方法把解析出来的Image作为一个数组来创建一个动画类型的UIImage对象就可以在UIImageView 上显示出来
-1234567891011121314151617181920212223242">
+<meta name="description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
+iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考IOHIDFa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gif图片显示实现">
-<meta property="og:url" content="http://vlemon.cn/2017/03/16/Gif图片显示实现/index.html">
+<meta property="og:title" content="iOS事件响应">
+<meta property="og:url" content="http://vlemon.cn/2017/03/27/iOS事件响应/index.html">
 <meta property="og:site_name" content="VLemon's Note">
-<meta property="og:description" content="iOS通过原生的方式支持GIF普通初始化UIImage的方法是不能支持GIF图显示的，但是可以通过解析GIF的data获取到每一帧的UIImage对象然后通过UIImage.animatedImage方法把解析出来的Image作为一个数组来创建一个动画类型的UIImage对象就可以在UIImageView 上显示出来
-1234567891011121314151617181920212223242">
-<meta property="og:updated_time" content="2017-03-16T08:42:01.000Z">
+<meta property="og:description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
+iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考IOHIDFa">
+<meta property="og:image" content="http://omydo7b89.bkt.clouddn.com/RunLoop_4.png">
+<meta property="og:updated_time" content="2017-03-27T07:48:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gif图片显示实现">
-<meta name="twitter:description" content="iOS通过原生的方式支持GIF普通初始化UIImage的方法是不能支持GIF图显示的，但是可以通过解析GIF的data获取到每一帧的UIImage对象然后通过UIImage.animatedImage方法把解析出来的Image作为一个数组来创建一个动画类型的UIImage对象就可以在UIImageView 上显示出来
-1234567891011121314151617181920212223242">
+<meta name="twitter:title" content="iOS事件响应">
+<meta name="twitter:description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
+iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考IOHIDFa">
+<meta name="twitter:image" content="http://omydo7b89.bkt.clouddn.com/RunLoop_4.png">
 
 
 
@@ -93,9 +95,9 @@
 
 
 
-  <link rel="canonical" href="http://vlemon.cn/2017/03/16/Gif图片显示实现/"/>
+  <link rel="canonical" href="http://vlemon.cn/2017/03/27/iOS事件响应/"/>
 
-  <title> Gif图片显示实现 | VLemon's Note </title>
+  <title> iOS事件响应 | VLemon's Note </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -208,15 +210,13 @@
   <div class="post-header">
       <div class="tags">
       
-        <a href="/tags/GIF-原创/" rel="tag" title="GIF 原创">GIF 原创</a>
-      
       </div>
-      <h1>Gif图片显示实现</h1>
+      <h1>iOS事件响应</h1>
       <h2 class="subtitle"></h2>
       <div class="post-time">
         <span class="post-meta-item-text">Posted on </span>
-        <time itemprop="dateCreated" datetime="2017-03-16T15:05:04+08:00" content="2017-03-16" title="2017-03-16 15:05:04">
-          2017-03-16
+        <time itemprop="dateCreated" datetime="2017-03-27T14:09:28+08:00" content="2017-03-27" title="2017-03-27 14:09:28">
+          2017-03-27
         </time>
       </div>
   </div>
@@ -251,7 +251,7 @@
             
             
               
-                Gif图片显示实现
+                iOS事件响应
               
             
           </h1>
@@ -263,8 +263,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2017-03-16T15:05:04+08:00" content="2017-03-16">
-              2017-03-16
+            <time itemprop="dateCreated" datetime="2017-03-27T14:09:28+08:00" content="2017-03-27">
+              2017-03-27
             </time>
           </span>
 
@@ -291,15 +291,32 @@
       
 
       
-        <h3 id="iOS通过原生的方式支持GIF"><a href="#iOS通过原生的方式支持GIF" class="headerlink" title="iOS通过原生的方式支持GIF"></a>iOS通过原生的方式支持GIF</h3><p>普通初始化UIImage的方法是不能支持GIF图显示的，但是可以通过解析GIF的data获取到每一帧的UIImage对象然后通过UIImage.animatedImage方法把解析出来的Image作为一个数组来创建一个动画类型的UIImage对象就可以在UIImageView 上显示出来</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取GIFImage的data</span></div><div class="line"><span class="keyword">let</span> gifData = <span class="type">NSData</span>.<span class="keyword">init</span>(contentsOf:<span class="type">Bundle</span>.main.url(forResource: <span class="string">"vldemo.gif"</span>, withExtension: <span class="literal">nil</span>)!)</div><div class="line"><span class="comment">//需要导入ImageIO</span></div><div class="line"><span class="keyword">let</span> source = <span class="type">CGImageSourceCreateWithData</span>(gifData!, <span class="literal">nil</span>);</div><div class="line"><span class="comment">//获取所有帧数</span></div><div class="line"><span class="keyword">let</span> <span class="built_in">count</span> = <span class="type">CGImageSourceGetCount</span>(source!);</div><div class="line"></div><div class="line"><span class="keyword">var</span> gifImage : <span class="type">UIImage</span></div><div class="line">        <span class="keyword">if</span> <span class="built_in">count</span> &lt;= <span class="number">1</span> &#123;</div><div class="line">            gifImage = <span class="type">UIImage</span>.<span class="keyword">init</span>(data: gifData <span class="keyword">as</span>! <span class="type">Data</span>)!</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">var</span> imagesArray:[<span class="type">UIImage</span>] = [<span class="type">UIImage</span>]()</div><div class="line">            <span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">0</span> ..&lt; <span class="built_in">count</span> &#123;</div><div class="line">                <span class="comment">//获取当前帧的Image对象</span></div><div class="line">                <span class="keyword">let</span> tmpImage = <span class="type">CGImageSourceCreateImageAtIndex</span>(source!, index, <span class="literal">nil</span>)</div><div class="line">                <span class="keyword">if</span> (tmpImage != <span class="literal">nil</span>) &#123;</div><div class="line">                   <span class="keyword">let</span> image = <span class="type">UIImage</span>.<span class="keyword">init</span>(cgImage: tmpImage!, scale: <span class="type">UIScreen</span>.main.scale, orientation: <span class="type">UIImageOrientation</span>.up)</div><div class="line">                imagesArray.append(image)</div><div class="line">                &#125;<span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">continue</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//注意 duration 是所有的总共GIF 播放的时间</span></div><div class="line">            gifImage = <span class="type">UIImage</span>.animatedImage(with: imagesArray, duration: <span class="number">1</span>)!</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+        <p>简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。</p>
+<h4 id="iOS操作系统关于事件的处理"><a href="#iOS操作系统关于事件的处理" class="headerlink" title="iOS操作系统关于事件的处理"></a>iOS操作系统关于事件的处理</h4><p>当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考<a href="http://iphonedevwiki.net/index.php/IOHIDFamily" target="_blank" rel="external">IOHIDFamily</a></p>
+<h4 id="App内对事件的相关处理"><a href="#App内对事件的相关处理" class="headerlink" title="App内对事件的相关处理"></a>App内对事件的相关处理</h4><p> 程序启动后会创建一个com.apple.uikit.eventfetch-thread线程。并在该线程添加Runloop，并添加mach_port来获取SpringBoard分发过来的事件信息，在该线程中有一个UIEventFetcher私有对象，<a href="https://github.com/VLemon/iOS10-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIEventFetcher.h" target="_blank" rel="external">获取的UIEventFetcher.h</a>，将SpringBoard分发过来的事件信息进行封装并转发给主线程。</p>
+<p>在查看堆栈信息的时候发现主线程在响应事件的时候触发的的Source1事件，说明也是通过mach_port来监听的事件，当主线程获取到Event后就会去寻找当前该处理这个事件的响应者。具体的逻辑如下</p>
+<a id="more"></a>
+<ol>
+<li>获取所有的Visible的Window。</li>
+<li>以该window为跟节点遍历所有的subview</li>
+<li>调用subView的hitTest:withEvent:方法</li>
+<li>通过hitTest:withEvent:方法判断当前UIView是否可以响应对象，如果是则返回该View，如果不是则继续寻找，直到循环结束。</li>
+<li>将返回的通过hitTest获取到的View数组 取最上层的响应该事件。</li>
+</ol>
 <blockquote>
-<p>通过该方法获取到的UIImage 直接放到UIImageView 就可以直接显示动画 播放速度也可以自己控制。还是比较方便，目前还没有详细测试性能，仅作参考（不过看SDWebImage对于GIF就是用该方式实现的）。</p>
+<p>需要满足一下几个方面的View才会响应事件</p>
+<ol>
+<li>Hidden == NO；</li>
+<li>UserInterfaceEnable == YES；</li>
+<li>透明度 &gt;= 0.01;</li>
+<li>通过调用View的pointInside:withEvent:方法返回YES</li>
+</ol>
 </blockquote>
-<h3 id="关于GIF保存到相册"><a href="#关于GIF保存到相册" class="headerlink" title="关于GIF保存到相册"></a>关于GIF保存到相册</h3><p>目前iOS 是可以支持保存GIF到相册，但是相册并不支持显示GIF动图所以只显示了第一帧，但是有些APP比如微信，可以在选择图片的时候判断出是否是GIF动态图。<br>保存的方法主要是要取到原始的GIF imageData.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="type">ALAssetsLibrary</span> *library = [[<span class="type">ALAssetsLibrary</span> alloc] <span class="keyword">init</span>];</div><div class="line">[library writeImageDataToSavedPhotosAlbum:imageData metadata:<span class="literal">nil</span> completionBlock:^(<span class="type">NSURL</span> *assetURL, <span class="type">NSError</span> *error) &#123;           </div><div class="line"></div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<hr>
-<p>关于iOS支持GIF显示可以有很多的第三方框架可以使用 比如FLAnimatedImage 就是比较成熟的支持GIF显示的框架。</p>
+<p>当完成获取响应者对象后会通过UIApplication sendEvent方法将该事件发送给UIWindow，UIWindow将该事件直接发送给通过HitTest方法筛选出来的View；</p>
+<blockquote>
+<p><em>关于hitTest:withEvent:调用多次的情况，在实际测试当中一个View的hitTest:withEvent:方法会调用两次，我看已经有开发者问苹果官方了，官方给出的说法是会对point做一些许调整。 <a href="https://lists.apple.com/archives/cocoa-dev/2014/Feb/msg00118.html" target="_blank" rel="external">链接</a></em></p>
+</blockquote>
+<p>附上Darwin的核心架构<br><img src="http://omydo7b89.bkt.clouddn.com/RunLoop_4.png" alt="Darwin"></p>
 
         所有文章非特别说明皆为原创。技术更迭迅猛，部分内容可能会作修改，为保证信息与源同步，转载时请务必注明文章出处！谢谢合作 :-)
       
@@ -321,24 +338,18 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/GIF-原创/" rel="tag">#GIF 原创</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/03/16/Runloop/" rel="next" title="Runloop">
+                <i class="fa fa-chevron-left"></i> Runloop
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/16/Runloop/" rel="prev" title="Runloop">
-                Runloop <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -492,7 +503,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS通过原生的方式支持GIF"><span class="nav-number">1.</span> <span class="nav-text">iOS通过原生的方式支持GIF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于GIF保存到相册"><span class="nav-number">2.</span> <span class="nav-text">关于GIF保存到相册</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#iOS操作系统关于事件的处理"><span class="nav-number">1.</span> <span class="nav-text">iOS操作系统关于事件的处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#App内对事件的相关处理"><span class="nav-number">2.</span> <span class="nav-text">App内对事件的相关处理</span></a></li></ol></div>
             
           </div>
         </section>
