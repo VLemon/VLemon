@@ -69,7 +69,7 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
 <meta property="og:description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
 iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考IOHIDFa">
 <meta property="og:image" content="http://omydo7b89.bkt.clouddn.com/RunLoop_4.png">
-<meta property="og:updated_time" content="2017-03-27T07:48:07.000Z">
+<meta property="og:updated_time" content="2017-04-06T11:31:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS事件响应">
 <meta name="twitter:description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
@@ -299,9 +299,8 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
 <ol>
 <li>获取所有的Visible的Window。</li>
 <li>以该window为跟节点遍历所有的subview</li>
-<li>调用subView的hitTest:withEvent:方法</li>
-<li>通过hitTest:withEvent:方法判断当前UIView是否可以响应对象，如果是则返回该View，如果不是则继续寻找，直到循环结束。</li>
-<li>将返回的通过hitTest获取到的View数组 取最上层的响应该事件。</li>
+<li>调用hitTest:withEvent:方法获取要响应的对象</li>
+<li>将返回的通过hitTest获取到的View 来响应事件</li>
 </ol>
 <blockquote>
 <p>需要满足一下几个方面的View才会响应事件</p>
