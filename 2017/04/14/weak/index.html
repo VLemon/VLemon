@@ -60,21 +60,19 @@
 
 
 
-<meta name="description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
-iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考IOHIDFa">
+<meta name="description" content="关于Weak关键字的理解在ARC环境下我们会经常遇到weak 跟 strong 两个关键字。最近看了一篇关于weak关键字的深入理解，自己按照自己的思路整理了一些想法，用代码写出来一点点验证。
+weak 修饰的 property123456789101112131415161718192021@interface ViewController ()@property (nonatomic,stro">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS事件响应">
-<meta property="og:url" content="http://vlemon.cn/2017/03/27/iOS事件响应/index.html">
+<meta property="og:title" content="weak">
+<meta property="og:url" content="http://vlemon.cn/2017/04/14/weak/index.html">
 <meta property="og:site_name" content="VLemon's Note">
-<meta property="og:description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
-iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考IOHIDFa">
-<meta property="og:image" content="http://omydo7b89.bkt.clouddn.com/RunLoop_4.png">
-<meta property="og:updated_time" content="2017-04-06T11:31:36.000Z">
+<meta property="og:description" content="关于Weak关键字的理解在ARC环境下我们会经常遇到weak 跟 strong 两个关键字。最近看了一篇关于weak关键字的深入理解，自己按照自己的思路整理了一些想法，用代码写出来一点点验证。
+weak 修饰的 property123456789101112131415161718192021@interface ViewController ()@property (nonatomic,stro">
+<meta property="og:updated_time" content="2017-04-28T03:13:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS事件响应">
-<meta name="twitter:description" content="简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。
-iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考IOHIDFa">
-<meta name="twitter:image" content="http://omydo7b89.bkt.clouddn.com/RunLoop_4.png">
+<meta name="twitter:title" content="weak">
+<meta name="twitter:description" content="关于Weak关键字的理解在ARC环境下我们会经常遇到weak 跟 strong 两个关键字。最近看了一篇关于weak关键字的深入理解，自己按照自己的思路整理了一些想法，用代码写出来一点点验证。
+weak 修饰的 property123456789101112131415161718192021@interface ViewController ()@property (nonatomic,stro">
 
 
 
@@ -95,9 +93,9 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
 
 
 
-  <link rel="canonical" href="http://vlemon.cn/2017/03/27/iOS事件响应/"/>
+  <link rel="canonical" href="http://vlemon.cn/2017/04/14/weak/"/>
 
-  <title> iOS事件响应 | VLemon's Note </title>
+  <title> weak | VLemon's Note </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -211,12 +209,12 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
       <div class="tags">
       
       </div>
-      <h1>iOS事件响应</h1>
+      <h1>weak</h1>
       <h2 class="subtitle"></h2>
       <div class="post-time">
         <span class="post-meta-item-text">Posted on </span>
-        <time itemprop="dateCreated" datetime="2017-03-27T14:09:28+08:00" content="2017-03-27" title="2017-03-27 14:09:28">
-          2017-03-27
+        <time itemprop="dateCreated" datetime="2017-04-14T11:10:13+08:00" content="2017-04-14" title="2017-04-14 11:10:13">
+          2017-04-14
         </time>
       </div>
   </div>
@@ -251,7 +249,7 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
             
             
               
-                iOS事件响应
+                weak
               
             
           </h1>
@@ -263,8 +261,8 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2017-03-27T14:09:28+08:00" content="2017-03-27">
-              2017-03-27
+            <time itemprop="dateCreated" datetime="2017-04-14T11:10:13+08:00" content="2017-04-14">
+              2017-04-14
             </time>
           </span>
 
@@ -291,31 +289,14 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
       
 
       
-        <p>简单说一下我对iOS事件响应的理解，其中包括系统层面，以及程序层面。</p>
-<h4 id="iOS操作系统关于事件的处理"><a href="#iOS操作系统关于事件的处理" class="headerlink" title="iOS操作系统关于事件的处理"></a>iOS操作系统关于事件的处理</h4><p>当以及硬件设备出发事件后，iOS系统会由IOKit.framework 生成一个事件（IOHIDEvent）并由SpringBoard（类似于Windows的explorer.exe 进程）接收，SpringBoard接收事件后会通过mach-port的方式分发给App。具体过程可以参考<a href="http://iphonedevwiki.net/index.php/IOHIDFamily" target="_blank" rel="external">IOHIDFamily</a></p>
-<h4 id="App内对事件的相关处理"><a href="#App内对事件的相关处理" class="headerlink" title="App内对事件的相关处理"></a>App内对事件的相关处理</h4><p> 程序启动后会创建一个com.apple.uikit.eventfetch-thread线程。并在该线程添加Runloop，并添加mach_port来获取SpringBoard分发过来的事件信息，在该线程中有一个UIEventFetcher私有对象，<a href="https://github.com/VLemon/iOS10-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIEventFetcher.h" target="_blank" rel="external">获取的UIEventFetcher.h</a>，将SpringBoard分发过来的事件信息进行封装并转发给主线程。</p>
-<p>在查看堆栈信息的时候发现主线程在响应事件的时候触发的的Source1事件，说明也是通过mach_port来监听的事件，当主线程获取到Event后就会去寻找当前该处理这个事件的响应者。具体的逻辑如下</p>
-<a id="more"></a>
-<ol>
-<li>获取所有的Visible的Window。</li>
-<li>以该window为跟节点遍历所有的subview</li>
-<li>调用hitTest:withEvent:方法获取要响应的对象</li>
-<li>将返回的通过hitTest获取到的View 来响应事件</li>
-</ol>
+        <h3 id="关于Weak关键字的理解"><a href="#关于Weak关键字的理解" class="headerlink" title="关于Weak关键字的理解"></a>关于Weak关键字的理解</h3><p>在ARC环境下我们会经常遇到weak 跟 strong 两个关键字。最近看了一篇关于weak关键字的深入理解，自己按照自己的思路整理了一些想法，用代码写出来一点点验证。</p>
+<h4 id="weak-修饰的-property"><a href="#weak-修饰的-property" class="headerlink" title="weak 修饰的 property"></a>weak 修饰的 property</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UILabel</span> *label;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">UILabel</span> *tLabel;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="built_in">UILabel</span> *label = [[<span class="built_in">UILabel</span> alloc] init];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.view addSubview:label];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.label = label;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.tLabel = label;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 1</div><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 2</div><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 3</div><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 3</div></pre></td></tr></table></figure>
 <blockquote>
-<p>需要满足一下几个方面的View才会响应事件</p>
-<ol>
-<li>Hidden == NO；</li>
-<li>UserInterfaceEnable == YES；</li>
-<li>透明度 &gt;= 0.01;</li>
-<li>通过调用View的pointInside:withEvent:方法返回YES</li>
-</ol>
+<p>1.在ARC下获取retainCount可以通过kvc来获取<br>2.可以看到用weak修饰的@property属性在调用set方法的时候retainCount是不会加的。</p>
 </blockquote>
-<p>当完成获取响应者对象后会通过UIApplication sendEvent方法将该事件发送给UIWindow，UIWindow将该事件直接发送给通过HitTest方法筛选出来的View；</p>
-<blockquote>
-<p><em>关于hitTest:withEvent:调用多次的情况，在实际测试当中一个View的hitTest:withEvent:方法会调用两次，我看已经有开发者问苹果官方了，官方给出的说法是会对point做一些许调整。 <a href="https://lists.apple.com/archives/cocoa-dev/2014/Feb/msg00118.html" target="_blank" rel="external">链接</a></em></p>
-</blockquote>
-<p>附上Darwin的核心架构<br><img src="http://omydo7b89.bkt.clouddn.com/RunLoop_4.png" alt="Darwin"></p>
+<p>– 未完待续</p>
 
         所有文章非特别说明皆为原创。技术更迭迅猛，部分内容可能会作修改，为保证信息与源同步，转载时请务必注明文章出处！谢谢合作 :-)
       
@@ -342,17 +323,13 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/16/Runloop/" rel="next" title="Runloop">
-                <i class="fa fa-chevron-left"></i> Runloop
+              <a href="/2017/03/27/iOS事件响应/" rel="next" title="iOS事件响应">
+                <i class="fa fa-chevron-left"></i> iOS事件响应
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/14/weak/" rel="prev" title="weak">
-                weak <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -506,7 +483,7 @@ iOS操作系统关于事件的处理当以及硬件设备出发事件后，iOS�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#iOS操作系统关于事件的处理"><span class="nav-number">1.</span> <span class="nav-text">iOS操作系统关于事件的处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#App内对事件的相关处理"><span class="nav-number">2.</span> <span class="nav-text">App内对事件的相关处理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Weak关键字的理解"><span class="nav-number">1.</span> <span class="nav-text">关于Weak关键字的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#weak-修饰的-property"><span class="nav-number">1.1.</span> <span class="nav-text">weak 修饰的 property</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
