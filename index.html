@@ -273,17 +273,13 @@
 
       
         
-          
-            <h3 id="关于Weak关键字的理解"><a href="#关于Weak关键字的理解" class="headerlink" title="关于Weak关键字的理解"></a>关于Weak关键字的理解</h3><p>在ARC环境下我们会经常遇到weak 跟 strong 两个关键字。最近看了一篇关于weak关键字的深入理解，自己按照自己的思路整理了一些想法，用代码写出来一点点验证。</p>
+          <h3 id="关于Weak关键字的理解"><a href="#关于Weak关键字的理解" class="headerlink" title="关于Weak关键字的理解"></a>关于Weak关键字的理解</h3><p>在ARC环境下我们会经常遇到weak 跟 strong 两个关键字。最近看了一篇关于weak关键字的深入理解，自己按照自己的思路整理了一些想法，用代码写出来一点点验证。</p>
 <h4 id="weak-修饰的-property"><a href="#weak-修饰的-property" class="headerlink" title="weak 修饰的 property"></a>weak 修饰的 property</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UILabel</span> *label;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">UILabel</span> *tLabel;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="built_in">UILabel</span> *label = [[<span class="built_in">UILabel</span> alloc] init];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.view addSubview:label];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.label = label;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.tLabel = label;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"--- %@"</span>,[label valueForKey:<span class="string">@"retainCount"</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>打印结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 1</div><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 2</div><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 3</div><div class="line">2017-04-14 11:09:35.897 Demo[4368:402405] --- 3</div></pre></td></tr></table></figure>
-<blockquote>
-<p>1.在ARC下获取retainCount可以通过kvc来获取<br>2.可以看到用weak修饰的@property属性在调用set方法的时候retainCount是不会加的。</p>
-</blockquote>
-<p>– 未完待续</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/04/14/weak/" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
